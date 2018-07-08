@@ -81,12 +81,33 @@ app.on('activate', function () {
 
 
 
-function sendToRendererContent() {
+function sendToRendererContent(slackText) {
   // mainWindow.webContents.on('did-finish-load', () => {
   // レンダラー側のonが実行される前に送るとエラーで落ちるので注意
-  invisibleWindow.webContents.send('slackContent', 'whoooooooh!')
+  invisibleWindow.webContents.send('slackContent', slackText)
   // });
 }
 
 
-setTimeout(sendToRendererContent, 1000);
+
+
+
+const token = require('./account.json').token;
+const { RTMClient } = require('@slack/client');
+
+var rtm = new RTMClient(token, { logLevel: 'debug' });
+rtm.start();
+
+rtm.on('message', (event) => {
+  // For structure of `event`, see https://api.slack.com/events/message
+  let message = event;
+  // Skip messages that are from a bot or my own user ID
+  // if ((message.subtype && message.subtype === 'bot_message') ||
+  //     (!message.subtype && message.user === rtm.activeUserId)) {
+  //     return;
+  // }
+
+  // Log the message
+  console.log(`(channel:${message.channel}) ${message.user} says: ${message.text}`);
+  sendToRendererContent(`${message.text}`);
+});
