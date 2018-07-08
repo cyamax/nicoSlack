@@ -1,12 +1,12 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
+
 NicoJS = require('nicoJS');
 const { ipcRenderer } = require('electron');
 
+
+
 var nico = new NicoJS({
     app: document.getElementById('app'),
-    width: 1200,
+    width: 1500,
     height: 400,
     font_size: 50,     // opt
     color: '#fff'  // opt
@@ -24,4 +24,3 @@ ipcRenderer.on('slackContent', (event, arg) => {
 
     nico.send(arg);
 });
-// ipcRenderer.send('asynchronous-message', 'ping');

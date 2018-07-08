@@ -31,7 +31,8 @@ function createWindow() {
   invisibleWindow.setIgnoreMouseEvents(true);
 
   // and load the index.html of the app.
-  invisibleWindow.loadFile('index.html')
+  invisibleWindow.loadFile('invisible.html');
+  mainWindow.loadFile('index.html');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -90,7 +91,7 @@ function sendToRendererContent(slackText) {
 
 
 
-// Slack Outgoing Web Hook
+//// Slack Outgoing Web Hook
 const { RTMClient } = require('@slack/client');
 const token = require('./account.json').token;
 
