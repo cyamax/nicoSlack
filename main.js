@@ -31,7 +31,8 @@ function createWindow() {
   invisibleWindow.setIgnoreMouseEvents(true);
 
   // and load the index.html of the app.
-  invisibleWindow.loadFile('index.html')
+  invisibleWindow.loadFile('invisible.html');
+  mainWindow.loadFile('index.html');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -81,12 +82,35 @@ app.on('activate', function () {
 
 
 
-function sendToRendererContent() {
+function sendToRendererContent(slackText) {
   // mainWindow.webContents.on('did-finish-load', () => {
   // レンダラー側のonが実行される前に送るとエラーで落ちるので注意
-  invisibleWindow.webContents.send('slackContent', 'whoooooooh!')
+  invisibleWindow.webContents.send('slackContent', slackText)
   // });
-}
+};
 
 
-setTimeout(sendToRendererContent, 1000);
+
+//// Slack Outgoing Web Hook
+const { RTMClient } = require('@slack/client');
+const token = require('./account.json').token;
+
+const rtm = new RTMClient(token, { logLevel: 'debug' });
+
+rtm.start();
+
+rtm.on('message', (event) => {
+  // For structure of `event`, see https://api.slack.com/events/message
+
+  let message = event;
+  // Skip messages that are from a bot or my own user ID
+  // if ((message.subtype && message.subtype === 'bot_message') ||
+  //     (!message.subtype && message.user === rtm.activeUserId)) {
+  //     return;
+  // }
+
+  // Log the message
+  console.log(`(channel:${message.channel}) ${message.user} says: ${message.text}`);
+  sendToRendererContent(`${message.text}`);
+});
+

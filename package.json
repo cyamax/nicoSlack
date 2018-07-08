@@ -1,25 +1,23 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "nicoSlack",
+  "version": "0.0.1",
+  "description": "niconicofu slack",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/cyamax/nicoSlack",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "slack"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "cyamax",
+  "license": "MIT Lisence",
   "devDependencies": {
     "electron": "^2.0.0"
   },
   "dependencies": {
+    "@slack/client": "^4.3.1",
     "nicojs": "^1.1.8"
   }
 }
