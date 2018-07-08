@@ -1,5 +1,5 @@
-// Modules to control application life and create native browser window
 "use strict"
+
 const electron = require('electron');
 const { app, BrowserWindow, ipcMain } = electron;
 
@@ -10,20 +10,20 @@ let invisibleWindow, mainWindow;
 function createWindow() {
   // Create the browser window.
 
-  // 画面いっぱいに表示
+  // 画面サイズを取得
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
+  
+  mainWindow = new BrowserWindow({
+    width: 320,
+    height: 240,
+  });
+
   invisibleWindow = new BrowserWindow({
     width,
     height,
     frame: false, //　ウィンドウフレーム非表示
     transparent: true,  //背景を透明に
     alwaysOnTop: true,  //常に最前面
-
-  });
-
-  mainWindow = new BrowserWindow({
-    width: 320,
-    height: 240,
   });
 
 
@@ -31,8 +31,8 @@ function createWindow() {
   invisibleWindow.setIgnoreMouseEvents(true);
 
   // and load the index.html of the app.
-  invisibleWindow.loadFile('invisible.html');
   mainWindow.loadFile('index.html');
+  invisibleWindow.loadFile('invisible.html');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -82,12 +82,13 @@ app.on('activate', function () {
 
 
 
+// 透明画面にメッセージを送る
 function sendToRendererContent(slackText) {
   // mainWindow.webContents.on('did-finish-load', () => {
   // レンダラー側のonが実行される前に送るとエラーで落ちるので注意
   invisibleWindow.webContents.send('slackContent', slackText)
   // });
-};
+}; 
 
 
 
