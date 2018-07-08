@@ -1,8 +1,10 @@
 # nicoSlack
 Slackのコメントをニコニコ動画風に流します。
 
-## 使い方
+## イメージ
+![image.png](image.png)
 
+## 使い方
 ### API Tokenを取得
 SlaclのAPI Tokenを取得。  
 https://api.slack.com/custom-integrations/legacy-tokens  
@@ -12,7 +14,7 @@ https://api.slack.com/custom-integrations/legacy-tokens
 ```
 # Clone this repository
 git clone https://github.com/cyamax/nicoSlack
-# Go into the repository
+# Go into the repositor
 cd nicoSlack
 ```
 
